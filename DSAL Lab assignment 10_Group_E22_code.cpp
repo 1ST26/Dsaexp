@@ -13,53 +13,46 @@ TYPE :- 1. Min Heap :- Root < Child.
 
 1. Complete Binary Tree is requaired.
 */
+#include <iostream>
+#include <vector>
+#include <queue>
 
-#include<iostream>
 using namespace std;
 
-void MinHeap(int arr[],int  i){
-    int parent = (i-1)/2;
-    int current =i;
-    while(parent >= 0 && arr[parent] > arr[current]){
-    	swap(arr[parent],arr[current]);
-    	current = parent;
-    	parent = (current-1)/2;
-    	
-	}
-}
-void MaxHeap(int arr[],int  i){
-    int parent = (i-1)/2;
-    int current =i;
-    while(parent >= 0 && arr[parent] < arr[current]){
-    	swap(arr[parent],arr[current]);
-    	current = parent;
-    	parent = (current-1)/2;
-    	
-	}
-}
-int main(){
-    int n;
-    cout<<"Enter No of Students: ";
-    cin>>n;
+pair<int, int> findMinMaxMarks(const vector<int>& marks) {
+    // Max heap
+    priority_queue<int> maxHeap(marks.begin(), marks.end());
 
-    int arr[n] = {};
-    cout<<"Enter DSA Marks of "<<n<<" students : "<<endl;
-    for(int i=0; i<n; i++){
-        cin>>arr[i];
+    // Min heap
+    priority_queue<int, vector<int>, greater<int>> minHeap(marks.begin(), marks.end());
+
+    // Maximum mark
+    int maxMark = maxHeap.top();
+
+    // Minimum mark
+    int minMark = minHeap.top();
+
+    return make_pair(maxMark, minMark);
+}
+
+int main() {
+    // Read marks from the user
+    int numStudents;
+    cout << "Enter the number of students: ";
+    cin >> numStudents;
+
+    vector<int> marks(numStudents);
+    cout << "Enter the marks obtained by each student: ";
+    for (int i = 0; i < numStudents; ++i) {
+        cin >> marks[i];
     }
 
-    
-    for(int i=1; i<6 ;i++){
-        MinHeap(arr,i);
+    // Find maximum and minimum marks
+    pair<int, int> maxMinMarks = findMinMaxMarks(marks);
 
-    }
-    cout<<"------------------------------"<<endl;
-    cout << "Minimum Score: "<<arr[0]<<endl;
+    // Display results
+    cout << "Maximum mark obtained: " << maxMinMarks.first << endl;
+    cout << "Minimum mark obtained: " << maxMinMarks.second << endl;
 
-    for(int i=1; i<6; i++){
-    	MaxHeap(arr, i);
-	}
-    cout<<"------------------------------"<<endl;
-    cout << "Max Score: "<<arr[0]<<endl;
     return 0;
 }
